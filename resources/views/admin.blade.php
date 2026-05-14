@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Panel</title>
     @inertiaHead
+    @routes 
+    @vite('resources/js/admin.js')
 
     <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
     <script src="{{ asset('admin/assets/js/config.js') }}"></script>
@@ -20,6 +22,6 @@
     <script src="{{ asset('admin/assets/js/app.js') }}"></script>
     <script src="{{ asset('admin/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
 
-    @vite('resources/js/admin.js')
+  
 </body>
 </html>
