@@ -20,7 +20,12 @@ Route::get('/contact', fn() => Inertia::render('Frontend/Contact'));
 Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('dashboard')->name('dashboard.')->controller(AdminDashboardController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
+
                 Route::get('/users', 'users')->name('users');
+                Route::get('/users/create', 'userCreate')->name('create');
+
+
+
                 Route::get('/settings', 'settings')->name('settings');
 
             });

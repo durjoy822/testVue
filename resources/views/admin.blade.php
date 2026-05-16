@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Panel</title>
     @inertiaHead
-    @routes 
+    @routes
     @vite('resources/js/admin.js')
 
     <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">

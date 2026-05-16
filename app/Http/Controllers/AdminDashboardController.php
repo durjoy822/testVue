@@ -21,4 +21,8 @@ class AdminDashboardController extends Controller
     {
         return Inertia::render('Admin/Settings/Index');
     }
+
+    public function userCreate(Request $request) {
+        return Inertia::render('Admin/Users/UserCreate');
+    }
 }
