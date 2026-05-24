@@ -22,7 +22,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('/', 'index')->name('index');
 
                 Route::get('/users', 'users')->name('users');
-                Route::get('/users/create', 'userCreate')->name('create');
+                Route::get('/users/create', 'userCreate')->name('user_create');
+                Route::post('/users/store', 'userStore')->name('user_store');
+                Route::get('/users/edit/{id}', 'userEdit')->name('user_edit');
 
 
 

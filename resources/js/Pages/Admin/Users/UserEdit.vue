@@ -7,24 +7,34 @@ defineOptions({
   layout: AdminLayout
 })
 
-const form = useForm({
-  name: '',
-  email: '',
-  phone: '',
-  role: '',
-  password: '',
-  confirm_password: '',
-  status: 'Active',
-  address: '',
-  joining_date: '',
-  avatar: null
+const props = defineProps({
+  user: Object
 })
 
-const avatarPreview = ref(null)
+const avatarPreview = ref(
+  props.user.avatar
+    ? `/uploads/users/${props.user.avatar}`
+    : null
+)
+
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 
+const form = useForm({
+  name: props.user.name || '',
+  email: props.user.email || '',
+  phone: props.user.phone || '',
+  role: props.user.role || '',
+  password: '',
+  confirm_password: '',
+  status: props.user.status || 'Active',
+  address: props.user.address || '',
+  joining_date: props.user.joining_date || '',
+  avatar: null
+})
+
 function handleAvatar(e) {
+
   const file = e.target.files[0]
 
   if (!file) return
@@ -41,34 +51,34 @@ function handleAvatar(e) {
 }
 
 function removeAvatar() {
+
   form.avatar = null
   avatarPreview.value = null
 }
 
 function handleSubmit() {
 
-  form.post(route('admin.dashboard.user_store'), {
+  form.put(
+    route('admin.dashboard.user_update', props.user.id),
+    {
+      forceFormData: true,
 
-    forceFormData: true,
+      onSuccess: () => {
 
-    onSuccess: () => {
-
-      form.reset()
-
-      form.status = 'Active'
-
-      avatarPreview.value = null
+        form.password = ''
+        form.confirm_password = ''
+      }
     }
-  })
+  )
 }
 
 function handleReset() {
 
   form.reset()
 
-  form.status = 'Active'
-
-  avatarPreview.value = null
+  avatarPreview.value = props.user.avatar
+    ? `/uploads/users/${props.user.avatar}`
+    : null
 }
 </script>
 
@@ -79,7 +89,7 @@ function handleReset() {
     <div class="cu-topbar">
 
       <div>
-        <h1 class="cu-page-title">Create New User</h1>
+        <h1 class="cu-page-title">Edit  User</h1>
       </div>
 
       <Link

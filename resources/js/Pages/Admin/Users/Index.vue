@@ -7,39 +7,14 @@ defineOptions({
   layout: AdminLayout
 })
 
-const users = ref([
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    phone: '+8801712345678',
-    role: 'Admin',
-    status: 'Active',
-    joined: '12 May 2026'
-  },
-  {
-    id: 2,
-    name: 'Sarah Khan',
-    email: 'sarah@example.com',
-    phone: '+8801811122233',
-    role: 'HR Manager',
-    status: 'Inactive',
-    joined: '10 May 2026'
-  },
-  {
-    id: 3,
-    name: 'Michael Roy',
-    email: 'michael@example.com',
-    phone: '+8801912345678',
-    role: 'Employee',
-    status: 'Active',
-    joined: '08 May 2026'
-  }
-])
+const props = defineProps({
+  users: Array
+})
 
 const selectedUser = ref({})
 
 const openModal = (user) => {
+
   selectedUser.value = user
 
   const modal = new bootstrap.Modal(
@@ -62,11 +37,11 @@ const openModal = (user) => {
         </small>
       </div>
 
-     <Link :href="route('admin.dashboard.create')">
-      <button class="btn btn-primary rounded-pill px-3">
-        <i class="fa-solid fa-plus"></i>
-        Add User
-      </button>
+      <Link :href="route('admin.dashboard.user_create')">
+        <button class="btn btn-primary rounded-pill px-3">
+          <i class="fa-solid fa-plus"></i>
+          Add User
+        </button>
       </Link>
     </div>
 
@@ -113,17 +88,20 @@ const openModal = (user) => {
             </thead>
 
             <tbody>
-              <tr v-for="user in users" :key="user.id">
 
-                <td>{{ user.id }}</td>
+              <tr v-for="(user, index) in users" :key="user.id">
+
+                <td>{{ index + 1 }}</td>
 
                 <td>
                   <div class="d-flex align-items-center gap-2">
+
                     <div class="user-avatar">
-                      {{ user.name.charAt(0) }}
+                      {{ user.name?.charAt(0) }}
                     </div>
 
                     <div>
+
                       <div class="fw-semibold">
                         {{ user.name }}
                       </div>
@@ -131,47 +109,42 @@ const openModal = (user) => {
                       <small class="text-muted">
                         {{ user.email }}
                       </small>
+
                     </div>
+
                   </div>
                 </td>
 
                 <td>{{ user.phone }}</td>
 
                 <td>
-                  <span class="badge bg-primary-subtle text-primary">
-                    {{ user.role }}
-                  </span>
+                  {{ user.role }}
                 </td>
 
                 <td>
-                  <span class="badge" :class="user.status === 'Active'
-                    ? 'bg-success-subtle text-success'
-                    : 'bg-danger-subtle text-danger'">
-                    {{ user.status }}
-                  </span>
+                  {{ user.status }}
                 </td>
 
-                <td>{{ user.joined }}</td>
+                <td>
+                  {{ user.joining_date }}
+                </td>
 
                 <td class="text-center">
-                  <div class="d-flex justify-content-center gap-2">
 
-                    <button class="btn btn-sm btn-light border" @click="openModal(user)">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
+                  <button class="btn btn-sm btn-light border me-2" @click="openModal(user)">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
 
-                    <button class="btn btn-sm btn-light border">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
+                    <Link  :href="route('admin.dashboard.user_edit', user.id)" class="btn btn-sm btn-light border" >
+                       <i class="fa fa-solid fa-edit"></i>
+                    </Link>
 
-                    <button class="btn btn-sm btn-light border text-danger">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
+                 <link rel="stylesheet" href=""> 
 
-                  </div>
                 </td>
 
               </tr>
+
             </tbody>
           </table>
         </div>
@@ -234,7 +207,7 @@ const openModal = (user) => {
               <div class="col-md-6">
                 <div class="info-card">
                   <small>Joined Date</small>
-                  <h6>{{ selectedUser.joined }}</h6>
+                  <h6>{{ selectedUser.joining_date }}</h6>
                 </div>
               </div>
 
